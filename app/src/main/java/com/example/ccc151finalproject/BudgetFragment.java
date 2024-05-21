@@ -1,64 +1,84 @@
 package com.example.ccc151finalproject;
 
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link BudgetFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class BudgetFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private ProgressBar monthlyProgressBar, weeklyProgessBar, dailyProgressBar;
+    private TextView monthlyProgressTxt, weeklyProgressTxt, dailyProgressTxt;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private void initViews(View view){
+        monthlyProgressBar = view.findViewById(R.id.monthly_budget_progress_bar);
+        weeklyProgessBar = view.findViewById(R.id.weekly_budget_progress_bar);
+        dailyProgressBar = view.findViewById(R.id.daily_budget_progress_bar);
 
-    public BudgetFragment() {
-        // Required empty public constructor
-    }
+        monthlyProgressTxt = view.findViewById(R.id.monthly_budget_progress_value);
+        weeklyProgressTxt = view.findViewById(R.id.weekly_budget_progress_value);
+        dailyProgressTxt = view.findViewById(R.id.daily_budget_progress_value);
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment BudgetFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static BudgetFragment newInstance(String param1, String param2) {
-        BudgetFragment fragment = new BudgetFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+        setMonthlyProgress(100);
+        setWeeklyProgress(100);
+        setDailyProgress(100);
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_budget, container, false);
+        View view = inflater.inflate(R.layout.fragment_budget, container, false);
+
+        // Initialize views using the inflated view
+        initViews(view);
+
+        return view;
+    }
+
+    public void setMonthlyProgress(double expense) {
+
+        double max_spending = 3000;
+        double progressRaw = max_spending - expense;
+        double progress = max_spending / progressRaw;
+
+        String text = expense + " / " + max_spending;
+
+        if (monthlyProgressBar != null && monthlyProgressTxt != null) {
+            monthlyProgressBar.setProgress((int)progress);
+            monthlyProgressTxt.setText(text);
+        }
+    }
+
+    public void setWeeklyProgress(double expense) {
+
+        double max_spending = 750;
+        double progressRaw = max_spending - expense;
+        double progress = max_spending / progressRaw;
+
+        String text = expense + " / " + max_spending;
+
+        if (weeklyProgessBar != null && weeklyProgressTxt != null) {
+            weeklyProgessBar.setProgress((int)progress);
+            weeklyProgressTxt.setText(text);
+        }
+    }
+
+    public void setDailyProgress(double expense) {
+
+        double max_spending = 100;
+        double progressRaw = max_spending - expense;
+        double progress = max_spending / progressRaw;
+
+        String text = expense + " / " + max_spending;
+
+        if (dailyProgressBar != null && dailyProgressTxt != null) {
+            dailyProgressBar.setProgress((int)progress);
+            dailyProgressTxt.setText(text);
+        }
     }
 }
