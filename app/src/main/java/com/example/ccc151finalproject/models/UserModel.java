@@ -10,8 +10,7 @@ public class UserModel {
 
     public UserModel(){}
 
-    public UserModel(int id, String first_name, String middle_name, String last_name, String username, String password) {
-        this.id = id;
+    public UserModel(String first_name, String middle_name, String last_name, String username, String password) {
         this.first_name = first_name;
         this.middle_name = middle_name;
         this.last_name = last_name;

@@ -9,8 +9,7 @@ public class BudgetModel {
 
     public BudgetModel() {}
 
-    public BudgetModel(int id, String timeframe, int amount, String start_date, String end_date) {
-        this.id = id;
+    public BudgetModel(String timeframe, int amount, String start_date, String end_date) {
         this.timeframe = timeframe;
         this.amount = amount;
         this.start_date = start_date;

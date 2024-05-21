@@ -6,8 +6,6 @@
     tools:context=".AccountFragment"
     android:background="#e8e8e8">
 
-    <!-- TODO: Update blank fragment layout -->
-
     <LinearLayout
         android:layout_marginVertical="10dp"
         android:layout_marginHorizontal="10dp"

@@ -1,5 +1,8 @@
 package com.example.ccc151finalproject.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ExpenseModel {
     private int id;
     private String name;
@@ -10,8 +13,7 @@ public class ExpenseModel {
 
     public ExpenseModel(){}
 
-    public ExpenseModel(int id, String name, String description, String type, int price, String date) {
-        this.id = id;
+    public ExpenseModel(String name, String description, String type, int price, String date) {
         this.name = name;
         this.description = description;
         this.type = type;
@@ -30,6 +32,11 @@ public class ExpenseModel {
                 ", date='" + date + '\'' +
                 '}';
     }
+
+//    public static ArrayList<ExpenseModel> getAllTransactions(){
+//        ArrayList<ExpenseModel> list = new ArrayList<>();
+//
+//    }
 
     public int getId() {
         return id;
