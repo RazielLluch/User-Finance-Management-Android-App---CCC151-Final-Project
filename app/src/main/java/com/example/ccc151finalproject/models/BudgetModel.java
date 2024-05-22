@@ -2,14 +2,16 @@ package com.example.ccc151finalproject.models;
 
 public class BudgetModel {
 
-    int id;
-    String timeframe;
-    int amount;
-    String start_date, end_date;
+    private int id;
+    private String name;
+    private String timeframe;
+    private int amount;
+    private String start_date, end_date;
 
     public BudgetModel() {}
 
-    public BudgetModel(String timeframe, int amount, String start_date, String end_date) {
+    public BudgetModel(String name, String timeframe, int amount, String start_date, String end_date) {
+        this.name = name;
         this.timeframe = timeframe;
         this.amount = amount;
         this.start_date = start_date;
@@ -20,6 +22,7 @@ public class BudgetModel {
     public String toString() {
         return "BudgetModel{" +
                 "id=" + id +
+                ", name='" + name + '\'' +
                 ", timeframe='" + timeframe + '\'' +
                 ", amount=" + amount +
                 ", start_date='" + start_date + '\'' +
@@ -29,6 +32,14 @@ public class BudgetModel {
 
     public int getId() {
         return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getTimeframe() {
