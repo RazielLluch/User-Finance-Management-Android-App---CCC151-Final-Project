@@ -4,10 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".TransactionsFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-
+    tools:context=".TransactionsFragment"
+    android:background="#e8e8e8"
+    >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/transactions_constraint_layout"
@@ -16,6 +15,7 @@
         >
 
         <ScrollView
+            android:id="@+id/transactions_scroll_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
@@ -28,6 +28,7 @@
             >
 
             <LinearLayout
+                android:id="@+id/transactions_linear_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
@@ -410,6 +411,7 @@
 
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/add_transaction_button"
             android:layout_margin="15dp"
             android:layout_gravity="center"
             android:layout_width="wrap_content"

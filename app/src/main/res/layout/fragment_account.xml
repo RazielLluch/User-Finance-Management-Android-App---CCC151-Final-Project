@@ -3,9 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AccountFragment">
-
-    <!-- TODO: Update blank fragment layout -->
+    tools:context=".AccountFragment"
+    android:background="#e8e8e8">
 
     <LinearLayout
         android:layout_marginVertical="10dp"
