@@ -31,10 +31,11 @@
             <LinearLayout
                 android:id="@+id/transactions_linear_layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="200dp"
                 android:orientation="vertical"
                 android:elevation="10dp"
-                android:background="@drawable/custome_border"
+                android:background="@drawable/custom_border"
                 android:backgroundTint="#ffffff"
                 >
 
@@ -49,121 +50,7 @@
                     android:text="Budgets"
                     />
 
-                <TextView
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_marginTop="1dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/inter_bold"
-                    android:text="This month"
-                    />
 
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    >
-
-                    <ProgressBar
-                        android:id="@+id/monthly_budget_progress_bar"
-                        style="?android:attr/progressBarStyleHorizontal"
-                        android:layout_marginHorizontal="10dp"
-                        android:minHeight="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:max="100"/>
-
-                    <TextView
-                        android:id="@+id/monthly_budget_progress_value"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginHorizontal="10dp"
-                        android:layout_width="70dp"
-                        android:layout_height="match_parent"
-                        android:fontFamily="@font/inter_regular"
-                        android:textSize="10sp"
-                        android:text="0 / 0"
-                        />
-
-
-                </LinearLayout>
-
-                <TextView
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_marginTop="1dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/inter_bold"
-                    android:text="This week"
-                    />
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ProgressBar
-                        android:id="@+id/weekly_budget_progress_bar"
-                        style="?android:attr/progressBarStyleHorizontal"
-                        android:layout_marginHorizontal="10dp"
-                        android:minHeight="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:max="100"/>
-
-                    <TextView
-                        android:id="@+id/weekly_budget_progress_value"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginHorizontal="10dp"
-                        android:layout_width="70dp"
-                        android:layout_height="match_parent"
-                        android:fontFamily="@font/inter_regular"
-                        android:textSize="10sp"
-                        android:text="0 / 0"
-                        />
-
-                </LinearLayout>
-
-                <TextView
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_marginTop="1dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/inter_bold"
-                    android:text="This day"
-                    />
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ProgressBar
-                        android:id="@+id/daily_budget_progress_bar"
-                        style="?android:attr/progressBarStyleHorizontal"
-                        android:layout_marginHorizontal="10dp"
-                        android:minHeight="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:max="100" />
-
-                    <TextView
-                        android:id="@+id/daily_budget_progress_value"
-                        android:layout_gravity="center"
-                        android:layout_marginHorizontal="10dp"
-                        android:layout_width="70dp"
-                        android:layout_height="match_parent"
-                        android:fontFamily="@font/inter_regular"
-                        android:textSize="10sp"
-                        android:text="0 / 0"
-                        />
-
-                </LinearLayout>
 
             </LinearLayout>
 

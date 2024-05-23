@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.icu.util.Calendar;
 import android.os.Bundle;
+
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,31 +17,30 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Spinner;
-
 import com.example.ccc151finalproject.models.BudgetModel;
 import com.example.ccc151finalproject.models.TestData;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 public class BudgetFragment extends Fragment implements AdapterView.OnItemSelectedListener{
 
     private FloatingActionButton button;
     private ProgressBar monthlyProgressBar, weeklyProgessBar, dailyProgressBar;
     private TextView monthlyProgressTxt, weeklyProgressTxt, dailyProgressTxt;
+    private LinearLayout transactionsLinearLayout;
 
+    Dialog dialog;
     String timeFrame;
 
     private void initViews(View view){
-        monthlyProgressBar = view.findViewById(R.id.monthly_budget_progress_bar);
-        weeklyProgessBar = view.findViewById(R.id.weekly_budget_progress_bar);
-        dailyProgressBar = view.findViewById(R.id.daily_budget_progress_bar);
 
-        monthlyProgressTxt = view.findViewById(R.id.monthly_budget_progress_value);
-        weeklyProgressTxt = view.findViewById(R.id.weekly_budget_progress_value);
-        dailyProgressTxt = view.findViewById(R.id.daily_budget_progress_value);
+        transactionsLinearLayout = view.findViewById(R.id.transactions_linear_layout);
 
         button = view.findViewById(R.id.add_transaction_button);
         button.setOnClickListener(new View.OnClickListener(){
@@ -48,7 +49,6 @@ public class BudgetFragment extends Fragment implements AdapterView.OnItemSelect
                 addBudget();
             }
         });
-
 
         setExpense(TestData.getMoney());
 
@@ -72,26 +72,28 @@ public class BudgetFragment extends Fragment implements AdapterView.OnItemSelect
 
     public void addBudget() {
         Toast.makeText(getActivity(), "Creating new budget", Toast.LENGTH_SHORT).show();
-
         // Create a new Dialog instance
-        Dialog dialog = new Dialog(getActivity());
+        dialog = new Dialog(getActivity());
 
         // Set the custom layout for the Dialog
         dialog.setContentView(R.layout.new_budget_dialog);
+
+
+        LinearLayout datesLayout = dialog.findViewById(R.id.dates_layout);
 
         // Initialize the EditText and Spinner variables by finding them in the Dialog layout
         EditText newBudgetName = dialog.findViewById(R.id.buget_name_input);
 
         Spinner timeframeDropdown = dialog.findViewById(R.id.timeframe_dropdown);
-        String[] items = new String[]{"Monthly", "Weekly", "Daily", "Custom"};
+        String[] items = new String[]{"Monthly", "Weekly", "Daily"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, items);
         timeframeDropdown.setAdapter(adapter);
 
         timeframeDropdown.setOnItemSelectedListener(this);
 
+
         EditText maxSpendingAmount = dialog.findViewById(R.id.max_spending_amount);
         TextView startDate = dialog.findViewById(R.id.start_date_txt);
-        TextView endDate = dialog.findViewById(R.id.end_date_txt);
         TextView addNewBudget = dialog.findViewById(R.id.add_new_budget);
 
         startDate.setOnClickListener(new View.OnClickListener() {
@@ -101,30 +103,27 @@ public class BudgetFragment extends Fragment implements AdapterView.OnItemSelect
             }
         });
 
-        endDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                createCalendarDialog(endDate);
-            }
-        });
-
         addNewBudget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                try{
+                    System.out.println("adding your new budget");
 
+                    BudgetModel newBudget = new BudgetModel(
+                            newBudgetName.getText().toString(),
+                            timeFrame,
+                            Integer.parseInt(maxSpendingAmount.getText().toString()),
+                            startDate.getText().toString(),
+                            1
+                    );
 
-                BudgetModel newBudget = new BudgetModel(
-                        newBudgetName.getText().toString(),
-                        timeFrame,
-                        Integer.parseInt(maxSpendingAmount.getText().toString()),
-                        startDate.getText().toString(),
-                        endDate.getText().toString()
-                );
+                    Toast.makeText(getContext(), newBudget.toString(), Toast.LENGTH_SHORT).show();
+                    System.out.println(newBudget.toString());
 
-                Toast.makeText(getContext(), newBudget.toString(), Toast.LENGTH_SHORT).show();
-
-
-                dialog.dismiss();
+                    dialog.dismiss();
+                }catch(Exception e){
+                    Toast.makeText(getContext(), "don't leave the info blank!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -136,7 +135,7 @@ public class BudgetFragment extends Fragment implements AdapterView.OnItemSelect
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View v, int position, long id){
-        String[] items = new String[]{"Monthly", "Weekly", "Daily", "Custom"};
+        String[] items = new String[]{"Monthly", "Weekly", "Daily"};
         timeFrame = items[position];
     }
 
@@ -145,7 +144,7 @@ public class BudgetFragment extends Fragment implements AdapterView.OnItemSelect
 
     }
 
-    private void createCalendarDialog(TextView date){
+    private void createCalendarDialog(TextView date) {
         // Get the current date
         final Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
@@ -161,7 +160,12 @@ public class BudgetFragment extends Fragment implements AdapterView.OnItemSelect
                         // Update the TextView with the selected date
                         Calendar selectedDate = Calendar.getInstance();
                         selectedDate.set(year, month, dayOfMonth);
-                        date.setText(selectedDate.getTime().toString());
+
+                        // Format the date as year-month-dayOfMonth
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                        String formattedDate = sdf.format(selectedDate.getTime());
+
+                        date.setText(formattedDate);
                     }
                 },
                 year, month, day
@@ -169,6 +173,7 @@ public class BudgetFragment extends Fragment implements AdapterView.OnItemSelect
 
         datePickerDialog.show();
     }
+
 
     /**
      *
