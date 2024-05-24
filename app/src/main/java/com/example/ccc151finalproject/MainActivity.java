@@ -5,8 +5,19 @@ import androidx.fragment.app.Fragment;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.room.Room;
 
+import com.example.ccc151finalproject.dao.BudgetDao;
+import com.example.ccc151finalproject.dao.ExpenseDao;
+import com.example.ccc151finalproject.dao.SavingsDao;
+import com.example.ccc151finalproject.dao.UserDao;
 import com.example.ccc151finalproject.databinding.ActivityMainBinding;
+import com.example.ccc151finalproject.models.BudgetModel;
+import com.example.ccc151finalproject.models.ExpenseModel;
+import com.example.ccc151finalproject.models.SavingsModel;
+import com.example.ccc151finalproject.models.UserModel;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,6 +28,36 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        MyAppDatabase db = MyAppDatabase.getMyAppDatabase(this);
+
+        // Example usage of UserDao
+        UserDao userDao = db.userDao();
+
+        UserModel firstUser = new UserModel(
+                "Josiah Raziel",
+                "Sermon",
+                "Lluch",
+                "raze955",
+                "1234"
+        );
+
+        userDao.insertUser(firstUser);
+
+//        List<UserModel> users = userDao.getAllUsers();
+//
+//// Example usage of BudgetDao
+//        BudgetDao budgetDao = db.budgetDao();
+//        List<BudgetModel> budgets = budgetDao.getAllBudgets();
+//
+//// Example usage of ExpenseDao
+//        ExpenseDao expenseDao = db.expenseDao();
+//        List<ExpenseModel> expenses = expenseDao.getAllExpenses();
+//
+//// Example usage of SavingsDao
+//        SavingsDao savingsDao = db.savingsDao();
+//        List<SavingsModel> savings = savingsDao.getAllSavings();
+
 
 
         replaceFragment(new AnalyticsFragment());

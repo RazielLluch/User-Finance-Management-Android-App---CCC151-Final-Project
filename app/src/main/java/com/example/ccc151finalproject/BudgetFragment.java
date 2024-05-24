@@ -2,19 +2,16 @@ package com.example.ccc151finalproject;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.icu.util.Calendar;
 import android.os.Bundle;
-
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -22,10 +19,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Spinner;
+
+import com.example.ccc151finalproject.dao.BudgetDao;
 import com.example.ccc151finalproject.models.BudgetModel;
 import com.example.ccc151finalproject.models.TestData;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.Locale;
 
 public class BudgetFragment extends Fragment implements AdapterView.OnItemSelectedListener{
@@ -38,9 +38,10 @@ public class BudgetFragment extends Fragment implements AdapterView.OnItemSelect
     Dialog dialog;
     String timeFrame;
 
-    private void initViews(View view){
+    MyAppDatabase db = MyAppDatabase.getMyAppDatabase(getContext());
+    BudgetDao budgetDao = db.budgetDao();
 
-        transactionsLinearLayout = view.findViewById(R.id.transactions_linear_layout);
+    private void initViews(View view){
 
         button = view.findViewById(R.id.add_transaction_button);
         button.setOnClickListener(new View.OnClickListener(){
@@ -49,6 +50,8 @@ public class BudgetFragment extends Fragment implements AdapterView.OnItemSelect
                 addBudget();
             }
         });
+
+        transactionsLinearLayout = view.findViewById(R.id.transactions_linear_layout);
 
         setExpense(TestData.getMoney());
 
@@ -63,6 +66,18 @@ public class BudgetFragment extends Fragment implements AdapterView.OnItemSelect
         // Initialize views using the inflated view
         initViews(view);
 
+        //retrieve all budgets
+        List<BudgetModel> budgets = budgetDao.getAllBudgets();
+
+        //add all budgets into the list view of budgets
+        for(BudgetModel budget : budgets){
+            BudgetView newBudgetView = new BudgetView(getContext(), budget);
+            newBudgetView.setId(View.generateViewId());
+            newBudgetView.setBudgetName(budget.getBudgetName());
+
+            transactionsLinearLayout.addView(newBudgetView);
+        }
+
         return view;
     }
 
@@ -73,13 +88,15 @@ public class BudgetFragment extends Fragment implements AdapterView.OnItemSelect
     public void addBudget() {
         Toast.makeText(getActivity(), "Creating new budget", Toast.LENGTH_SHORT).show();
         // Create a new Dialog instance
-        dialog = new Dialog(getActivity());
+        dialog = new Dialog(getContext());
 
         // Set the custom layout for the Dialog
         dialog.setContentView(R.layout.new_budget_dialog);
 
 
         LinearLayout datesLayout = dialog.findViewById(R.id.dates_layout);
+
+
 
         // Initialize the EditText and Spinner variables by finding them in the Dialog layout
         EditText newBudgetName = dialog.findViewById(R.id.buget_name_input);
@@ -93,7 +110,7 @@ public class BudgetFragment extends Fragment implements AdapterView.OnItemSelect
 
 
         EditText maxSpendingAmount = dialog.findViewById(R.id.max_spending_amount);
-        TextView startDate = dialog.findViewById(R.id.start_date_txt);
+        Button startDate = dialog.findViewById(R.id.start_date_btn);
         TextView addNewBudget = dialog.findViewById(R.id.add_new_budget);
 
         startDate.setOnClickListener(new View.OnClickListener() {
@@ -106,7 +123,7 @@ public class BudgetFragment extends Fragment implements AdapterView.OnItemSelect
         addNewBudget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try{
+                try {
                     System.out.println("adding your new budget");
 
                     BudgetModel newBudget = new BudgetModel(
@@ -114,20 +131,50 @@ public class BudgetFragment extends Fragment implements AdapterView.OnItemSelect
                             timeFrame,
                             Integer.parseInt(maxSpendingAmount.getText().toString()),
                             startDate.getText().toString(),
+                            startDate.getText().toString(),
                             1
                     );
 
-                    Toast.makeText(getContext(), newBudget.toString(), Toast.LENGTH_SHORT).show();
+                    budgetDao.insertBudget(newBudget);
+
+
+//                    Toast.makeText(getContext(), newBudget.toString(), Toast.LENGTH_SHORT).show();
                     System.out.println(newBudget.toString());
 
+                    BudgetView newBudgetView = new BudgetView(getContext(), newBudget);
+                    newBudgetView.setId(View.generateViewId());
+                    newBudgetView.setBudgetName(newBudgetName.getText().toString());
+
+                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT
+                    );
+
+                    int leftMarginInDp = 10;
+                    int topMarginInDp = 10;
+                    int rightMarginInDp = 10;
+                    int bottomMarginInDp = 0;
+
+                    float scale = getResources().getDisplayMetrics().density;
+                    int leftMarginInPixels = (int) (leftMarginInDp * scale + 0.5f);
+                    int topMarginInPixels = (int) (topMarginInDp * scale + 0.5f);
+                    int rightMarginInPixels = (int) (rightMarginInDp * scale + 0.5f);
+                    int bottomMarginInPixels = (int) (bottomMarginInDp * scale + 0.5f);
+
+                    layoutParams.setMargins(leftMarginInPixels, topMarginInPixels, rightMarginInPixels, bottomMarginInPixels);
+
+                    newBudgetView.setLayoutParams(layoutParams); // Apply layout parameters to newBudgetView
+                    newBudgetView.setProgressTxt("0.0 / " + maxSpendingAmount.getText().toString());
+                    transactionsLinearLayout.addView(newBudgetView);
+
                     dialog.dismiss();
-                }catch(Exception e){
-                    Toast.makeText(getContext(), "don't leave the info blank!", Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    System.out.println("Add new budget debug");
+                    e.printStackTrace();
+                    Toast.makeText(getContext(), "Don't leave the info blank!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-
-
 
         // Show the Dialog
         dialog.show();
@@ -173,7 +220,6 @@ public class BudgetFragment extends Fragment implements AdapterView.OnItemSelect
 
         datePickerDialog.show();
     }
-
 
     /**
      *
