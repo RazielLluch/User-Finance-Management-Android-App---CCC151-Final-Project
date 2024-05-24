@@ -1,45 +1,44 @@
 package com.example.ccc151finalproject.models;
 
-import java.util.ArrayList;
-import java.util.List;
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.PrimaryKey;
 
+import com.example.ccc151finalproject.models.BudgetModel;
+
+@Entity(tableName = "Expense",
+        foreignKeys = @ForeignKey(entity = BudgetModel.class,
+                parentColumns = "id",
+                childColumns = "budgetId",
+                onDelete = ForeignKey.CASCADE,
+                onUpdate = ForeignKey.CASCADE))
 public class ExpenseModel {
+    @PrimaryKey(autoGenerate = true)
     private int id;
     private String name;
     private String description;
     private String type;
-    private int price;
     private String date;
+    private double price;
+    private int budgetId;
 
-    public ExpenseModel(){}
-
-    public ExpenseModel(String name, String description, String type, int price, String date) {
+    // Constructor
+    public ExpenseModel(String name, String description, String type, String date, double price, int budgetId) {
         this.name = name;
         this.description = description;
         this.type = type;
-        this.price = price;
         this.date = date;
+        this.price = price;
+        this.budgetId = budgetId;
     }
 
-    @Override
-    public String toString() {
-        return "ExpenseModel{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", type='" + type + '\'' +
-                ", price=" + price +
-                ", date='" + date + '\'' +
-                '}';
-    }
-
-//    public static ArrayList<ExpenseModel> getAllTransactions(){
-//        ArrayList<ExpenseModel> list = new ArrayList<>();
-//
-//    }
-
+    // Getters and Setters
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -66,19 +65,27 @@ public class ExpenseModel {
         this.type = type;
     }
 
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
     public String getDate() {
         return date;
     }
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public int getBudgetId() {
+        return budgetId;
+    }
+
+    public void setBudgetId(int budgetId) {
+        this.budgetId = budgetId;
     }
 }

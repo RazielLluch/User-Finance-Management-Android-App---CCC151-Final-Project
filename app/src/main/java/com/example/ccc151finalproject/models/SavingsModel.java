@@ -1,22 +1,36 @@
 package com.example.ccc151finalproject.models;
 
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "Savings",
+        foreignKeys = @ForeignKey(entity = BudgetModel.class,
+                parentColumns = "id",
+                childColumns = "budgetId",
+                onDelete = ForeignKey.CASCADE,
+                onUpdate = ForeignKey.CASCADE))
 public class SavingsModel {
+    @PrimaryKey(autoGenerate = true)
+    private int id;
     private int amount;
     private String date;
+    private int budgetId;
 
-    public SavingsModel(){}
-
-    public SavingsModel(int amount, String date) {
+    // Constructor
+    public SavingsModel(int amount, String date, int budgetId) {
         this.amount = amount;
         this.date = date;
+        this.budgetId = budgetId;
     }
 
-    @Override
-    public String toString() {
-        return "SavingsModel{" +
-                "amount=" + amount +
-                ", date='" + date + '\'' +
-                '}';
+    // Getters and Setters
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getAmount() {
@@ -33,5 +47,13 @@ public class SavingsModel {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public int getBudgetId() {
+        return budgetId;
+    }
+
+    public void setBudgetId(int budgetId) {
+        this.budgetId = budgetId;
     }
 }

@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:id="@+id/root_vg"
+    android:background="@drawable/custom_border"
     >
 
     <LinearLayout
@@ -47,29 +48,34 @@
             android:inputType="numberDecimal"
             />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_gravity="center"
+            android:text="start-date"/>
+
         <LinearLayout
             android:id="@+id/dates_layout"
             android:orientation="horizontal"
-            android:layout_margin="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            >
+            android:gravity="center_horizontal">
 
-            <TextView
-                android:id="@+id/start_date_txt"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
+            <Button
+                android:id="@+id/start_date_btn"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
                 android:layout_marginRight="2dp"
                 android:textAlignment="center"
                 android:text="Start-date"
                 android:textColor="@color/Primary"
                 android:background="@color/tertiary"
-                />
-
-
+                android:gravity="center"/>
 
         </LinearLayout>
+
 
         <TextView
             android:id="@+id/add_new_budget"

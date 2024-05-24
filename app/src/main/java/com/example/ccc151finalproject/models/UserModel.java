@@ -1,61 +1,59 @@
 package com.example.ccc151finalproject.models;
 
+import androidx.room.Entity;
+import androidx.room.Index;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "User", indices = {@Index(value = {"username"}, unique = true)})
 public class UserModel {
+    @PrimaryKey(autoGenerate = true)
     private int id;
-    private String first_name;
-    private String middle_name;
-    private String last_name;
+    private String firstName;
+    private String middleName;
+    private String lastName;
     private String username;
     private String password;
 
-    public UserModel(){}
-
-    public UserModel(String first_name, String middle_name, String last_name, String username, String password) {
-        this.first_name = first_name;
-        this.middle_name = middle_name;
-        this.last_name = last_name;
+    // Constructor
+    public UserModel(String firstName, String middleName, String lastName, String username, String password) {
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.lastName = lastName;
         this.username = username;
         this.password = password;
     }
 
-    @Override
-    public String toString() {
-        return "UserModel{" +
-                "id=" + id +
-                ", first_name='" + first_name + '\'' +
-                ", middle_name='" + middle_name + '\'' +
-                ", last_name='" + last_name + '\'' +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
-
+    // Getters and Setters
     public int getId() {
         return id;
     }
 
-    public String getFirst_name() {
-        return first_name;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public String getMiddle_name() {
-        return middle_name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public void setMiddle_name(String middle_name) {
-        this.middle_name = middle_name;
+    public String getMiddleName() {
+        return middleName;
     }
 
-    public String getLast_name() {
-        return last_name;
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
     }
 
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getUsername() {
