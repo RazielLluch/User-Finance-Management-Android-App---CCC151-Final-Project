@@ -2,19 +2,12 @@ package com.example.ccc151finalproject.dialogs;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
-import android.widget.Spinner;
 import android.widget.TextView;
-
-import java.util.List;
 import com.example.ccc151finalproject.R;
 import com.example.ccc151finalproject.database.MyAppDatabase;
 import com.example.ccc151finalproject.database.dao.BudgetDao;
@@ -23,13 +16,12 @@ import com.example.ccc151finalproject.database.models.BudgetModel;
 import com.example.ccc151finalproject.database.models.ExpenseModel;
 import com.example.ccc151finalproject.views.TransactionView;
 
-import java.text.SimpleDateFormat;
-import java.util.Locale;
+import java.util.List;
 
 public class BudgetDetailsDialog extends Dialog {
 
     private MyAppDatabase db = MyAppDatabase.getMyAppDatabase(getContext());
-    private LinearLayout transactionsLinearLayout;
+    private LinearLayout transactionsLinearLayout, transactionsLinearLayout2;
     private Context context;
     private ExpenseDao expenseDao;
     private BudgetDao budgetDao;
@@ -53,6 +45,7 @@ public class BudgetDetailsDialog extends Dialog {
         budgetTimeframe.setText("budget timeframe: " + budgetModel.getTimeframe());
         startDate.setText("from: " + budgetModel.getStartDate());
         endDate.setText("to: " + budgetModel.getEndDate());
+        transactionsLinearLayout2 = findViewById(R.id.transactions_linear_layout2);
 
         List<ExpenseModel> expensesOfThisBudget = expenseDao.getExpenseByBudget(budgetModel.getId());
 
@@ -60,8 +53,10 @@ public class BudgetDetailsDialog extends Dialog {
 
             TransactionView transactionView = new TransactionView(getContext(), expense);
 
-            transactionsScrollView.addView(transactionView);
+            transactionsLinearLayout2.addView(transactionView);
         }
+
+
 
         closeButton = findViewById(R.id.close_button);
         deleteButton = findViewById(R.id.delete_button);

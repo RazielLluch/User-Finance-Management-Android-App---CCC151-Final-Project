@@ -9,6 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.Toast;
+
+import com.example.ccc151finalproject.database.dao.BudgetDao;
 import com.example.ccc151finalproject.dialogs.NewTransactionDialog;
 import com.example.ccc151finalproject.R;
 import com.example.ccc151finalproject.database.dao.ExpenseDao;
@@ -34,7 +37,12 @@ public class TransactionsFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                openNewTransactionDialog(expenseDao);
+
+                BudgetDao budgetDao = db.budgetDao();
+
+                if(budgetDao.getNumberOfBudgets() != 0) openNewTransactionDialog(expenseDao);
+                else Toast.makeText(getContext(), "You don't have any budgets!", Toast.LENGTH_SHORT).show();
+
             }
         });
 

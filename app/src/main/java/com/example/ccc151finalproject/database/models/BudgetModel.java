@@ -5,6 +5,9 @@ import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+
 @Entity(tableName = "Budget",
         foreignKeys = @ForeignKey(entity = UserModel.class,
                 parentColumns = "id",
@@ -49,98 +52,27 @@ public class BudgetModel {
 
         switch(timeframe){
             case "monthly" : {
-
-                if (month == 12) {
-                    year += 1;
-                    month = 1;
-                } else if (month == 2 && day > 28) {
-                    month = 4;
-                    day = day - 28;
-                } else if (month == 2 && day == 1) {
-                    month = 3;
-                } else if (day == 31) {
-                    month += 1;
-                    day = 30;
-                } else {
-                    month += 1;
-                }
-            }
-                break;
-            case "weekly" : {
-                switch(month){
-                    case 1, 3, 5, 7, 8, 10:{
-                        if(day > 24){
-                            month++;
-                            day = day - 24;
-                        }else day += 7;
-                    }break;
-
-                    case 2:{
-                        if(year % 4 == 0){
-                            if(day > 22){
-                                month++;
-                                day = day -22;
-                            }else day += 7;
-                        }else{
-                            if(day > 21){
-                                month++;
-                                day = day - 21;
-                            }else day += 7;
-                        }
-                    }break;
-
-                    case 4, 6, 9, 11: {
-                        if(day > 23){
-                            month++;
-                            day = day - 24;
-                        }else day += 7;
-                    }break;
-
-                    case 12:{
-                        if(day > 24){
-                            month = 1;
-                            day = day - 24;
-                        }else day += 7;
-                    }break;
+                try {
+                    LocalDate date = LocalDate.parse(startDate);
+                    LocalDate newDate = date.plusMonths(1);
+                    endDate = newDate.toString();
+                } catch (DateTimeParseException e) {
+                    System.out.println("Invalid date format: " + e.getMessage());
                 }
             }break;
-            case "daily" :{
-                switch(month){
-                    case 1, 3, 5, 7, 8, 10:{
-                        if(day > 30){
-                            month++;
-                            day = day - 30;
-                        }else day += 1;
-                    }break;
+            case "weekly" : {
 
-                    case 2:{
-                        if(year % 4 == 0){
-                            if(day > 28){
-                                month++;
-                                day = day -28;
-                            }else day += 1;
-                        }else{
-                            if(day > 27){
-                                month++;
-                                day = day - 27;
-                            }else day += 1;
-                        }
-                    }break;
-
-                    case 4, 6, 9, 11: {
-                        if(day > 29){
-                            month++;
-                            day = day - 29;
-                        }else day += 1;
-                    }break;
-
-                    case 12:{
-                        if(day > 30){
-                            month = 1;
-                            day = day - 30;
-                        }else day += 1;
-                    }break;
+                try {
+                    LocalDate date = LocalDate.parse(startDate);
+                    LocalDate newDate = date.plusDays(7);
+                    endDate = newDate.toString();
+                } catch (DateTimeParseException e) {
+                    System.out.println("Invalid date format: " + e.getMessage());
                 }
+
+            }break;
+            case "daily" :{
+                endDate = startDate;
             }break;
         }
         String monthStr;

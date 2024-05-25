@@ -85,7 +85,7 @@
         android:layout_marginHorizontal="10dp"
         android:fontFamily="@font/inter_semibold"
         android:inputType="numberDecimal"
-        android:hint="expense name:"
+        android:hint="amount:"
         />
 
     <TextView
