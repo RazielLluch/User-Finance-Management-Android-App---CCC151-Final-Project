@@ -3,6 +3,7 @@ package com.example.ccc151finalproject.views;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -17,7 +18,7 @@ import com.example.ccc151finalproject.database.models.BudgetModel;
 public class BudgetView extends LinearLayout {
 
     private float scale = getResources().getDisplayMetrics().density;
-    private BudgetModel budgetModel;
+    private final BudgetModel budgetModel;
     private TextView budgetName;
     private LinearLayout progressLayout;
     private ProgressBar progressBar;
@@ -47,26 +48,15 @@ public class BudgetView extends LinearLayout {
 
         addView(progressLayout);
     }
-
     public BudgetView(Context context, BudgetModel budgetModel) {
         super(context);
         this.budgetModel = budgetModel;
         init(context);
         setupLayout(context);
     }
+    private void viewBudgetDetails(){
 
-    public BudgetView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init(context);
-        setupLayout(context);
     }
-
-    public BudgetView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        init(context);
-        setupLayout(context);
-    }
-
     private void setupLayout(Context context) {
         float scale = getResources().getDisplayMetrics().density;
 
@@ -93,7 +83,6 @@ public class BudgetView extends LinearLayout {
         budgetName.setTypeface(font);
         budgetName.setText("hello");
     }
-
     private void initProgressBar(){
         LayoutParams progressBarParams = new LayoutParams(
                 0,
@@ -104,7 +93,6 @@ public class BudgetView extends LinearLayout {
         progressBar.setMax(budgetModel.getAmount());
         progressBar.setProgress(0);
     }
-
     private void initProgressTxt(){
         int progressTxtWidth = (int)(70 * scale + 0.5f);
 
@@ -119,7 +107,6 @@ public class BudgetView extends LinearLayout {
         progressTxt.setTextSize(10);
         progressTxt.setText("0.0 / " + budgetModel.getAmount());
     }
-
     private void initIcon(){
         moreIcon.setImageResource(R.drawable.more_info);
 
@@ -130,13 +117,21 @@ public class BudgetView extends LinearLayout {
                 iconHeight
         );
         moreIcon.setLayoutParams(moreIconParams);
-    }
 
+        moreIcon.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewBudgetDetails();
+            }
+        });
+    }
     public void setBudgetName(String name) {
         budgetName.setText(name);
     }
-
     public void setProgressTxt(String text){
         progressTxt.setText(text);
+    }
+    public void setProgress(int progress){
+        progressBar.setProgress(progress);
     }
 }

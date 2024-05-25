@@ -23,7 +23,9 @@ import android.widget.Spinner;
 import com.example.ccc151finalproject.R;
 import com.example.ccc151finalproject.database.dao.BudgetDao;
 import com.example.ccc151finalproject.database.MyAppDatabase;
+import com.example.ccc151finalproject.database.dao.ExpenseDao;
 import com.example.ccc151finalproject.database.models.BudgetModel;
+import com.example.ccc151finalproject.database.models.ExpenseModel;
 import com.example.ccc151finalproject.database.models.TestData;
 import com.example.ccc151finalproject.views.BudgetView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -39,8 +41,8 @@ public class BudgetFragment extends Fragment implements AdapterView.OnItemSelect
     private LinearLayout transactionsLinearLayout;
     private Dialog dialog;
     private String timeFrame;
-    private MyAppDatabase db = MyAppDatabase.getMyAppDatabase(getContext());
-    private BudgetDao budgetDao = db.budgetDao();
+    private final MyAppDatabase db = MyAppDatabase.getMyAppDatabase(getContext());
+    private final BudgetDao budgetDao = db.budgetDao();
 
     private void initViews(View view){
 
@@ -72,9 +74,21 @@ public class BudgetFragment extends Fragment implements AdapterView.OnItemSelect
 
         //add all budgets into the list view of budgets
         for(BudgetModel budget : budgets){
+
+            ExpenseDao expenseDao = db.expenseDao();
+
+            List<ExpenseModel> expensesOfThisBudget = expenseDao.getExpenseByBudget(budget.getId());
+
+            double sum = 0;
+            for(ExpenseModel expense : expensesOfThisBudget){
+                sum += expense.getPrice();
+            }
+
             BudgetView newBudgetView = new BudgetView(getContext(), budget);
             newBudgetView.setId(View.generateViewId());
             newBudgetView.setBudgetName(budget.getBudgetName());
+            newBudgetView.setProgress((int)sum);
+            newBudgetView.setProgressTxt(sum + " / " + budget.getAmount());
 
             transactionsLinearLayout.addView(newBudgetView);
         }
@@ -106,7 +120,7 @@ public class BudgetFragment extends Fragment implements AdapterView.OnItemSelect
         String[] items = new String[]{"Monthly", "Weekly", "Daily"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, items);
         timeframeDropdown.setAdapter(adapter);
-
+        timeframeDropdown.setBackgroundResource(R.drawable.dropdown_background);
         timeframeDropdown.setOnItemSelectedListener(this);
 
 
@@ -131,7 +145,6 @@ public class BudgetFragment extends Fragment implements AdapterView.OnItemSelect
                             newBudgetName.getText().toString(),
                             timeFrame,
                             Integer.parseInt(maxSpendingAmount.getText().toString()),
-                            startDate.getText().toString(),
                             startDate.getText().toString(),
                             1
                     );

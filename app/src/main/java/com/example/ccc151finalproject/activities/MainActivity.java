@@ -1,4 +1,4 @@
-package com.example.ccc151finalproject;
+package com.example.ccc151finalproject.activities;
 
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.ccc151finalproject.R;
 import com.example.ccc151finalproject.database.dao.UserDao;
 import com.example.ccc151finalproject.database.MyAppDatabase;
 import com.example.ccc151finalproject.databinding.ActivityMainBinding;

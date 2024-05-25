@@ -1,13 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="350dp"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <Button
-        android:id="@+id/close_button"
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="15dp"
+        android:fontFamily="@font/inter_bold"
+        android:textAlignment="center"
+        android:textSize="19sp"
+        android:text="Name of your expense:"
+        />
+
+    <EditText
+        android:id="@+id/expense_name_field"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:fontFamily="@font/inter_semibold"
+        android:inputType="text"
+        android:hint="expense name:"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:layout_marginHorizontal="10dp"
+        android:fontFamily="@font/inter_bold"
+        android:textAlignment="center"
+        android:textSize="19sp"
+        android:text="description of your expense:"
+    />
+
+    <EditText
+        android:id="@+id/expense_desc_field"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:fontFamily="@font/inter_semibold"
+        android:inputType="textLongMessage"
+        android:maxLines="5"
+        android:hint="expense description:"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:layout_marginHorizontal="10dp"
+        android:fontFamily="@font/inter_bold"
+        android:textAlignment="center"
+        android:textSize="19sp"
+        android:text="what type of expense?"
+        />
+
+    <Spinner
+        android:id="@+id/type_dropdown"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="40dp"
+        android:layout_marginHorizontal="10dp"
+        android:background="@drawable/dropdown_background"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:layout_marginHorizontal="10dp"
+        android:fontFamily="@font/inter_bold"
+        android:textAlignment="center"
+        android:textSize="19sp"
+        android:text="Price?"
+        />
+
+    <EditText
+        android:id="@+id/expense_price_field"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:fontFamily="@font/inter_semibold"
+        android:inputType="numberDecimal"
+        android:hint="expense name:"
+        />
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Close"/>
+        android:layout_marginVertical="10dp"
+        android:layout_gravity="center"
+        >
+
+        <Button
+            android:id="@+id/close_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:text="Close"/>
+
+        <Button
+            android:id="@+id/add_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="add"/>
+
+    </LinearLayout>
 
 </LinearLayout>
