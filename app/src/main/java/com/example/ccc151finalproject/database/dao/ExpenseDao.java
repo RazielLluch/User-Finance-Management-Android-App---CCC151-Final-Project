@@ -3,6 +3,7 @@ package com.example.ccc151finalproject.database.dao;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -21,7 +22,10 @@ public interface ExpenseDao {
     @Query("SELECT * FROM Expense WHERE id = :expenseId")
     ExpenseModel getExpenseById(int expenseId);
 
-    @Insert
+    @Query("SELECT * FROM Expense WHERE budgetId = :budgetId")
+    List<ExpenseModel> getExpenseByBudget(int budgetId);
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertExpense(ExpenseModel expense);
 
     @Update
