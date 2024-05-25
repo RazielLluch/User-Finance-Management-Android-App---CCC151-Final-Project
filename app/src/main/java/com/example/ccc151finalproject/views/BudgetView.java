@@ -14,6 +14,7 @@ import androidx.core.content.res.ResourcesCompat;
 
 import com.example.ccc151finalproject.R;
 import com.example.ccc151finalproject.database.models.BudgetModel;
+import com.example.ccc151finalproject.dialogs.BudgetDetailsDialog;
 
 public class BudgetView extends LinearLayout {
 
@@ -24,6 +25,7 @@ public class BudgetView extends LinearLayout {
     private ProgressBar progressBar;
     private TextView progressTxt;
     private ImageView moreIcon;
+    private LinearLayout transactionsLinearLayout;
 
     private void init(Context context) {
         budgetName = new TextView(context);
@@ -48,14 +50,17 @@ public class BudgetView extends LinearLayout {
 
         addView(progressLayout);
     }
-    public BudgetView(Context context, BudgetModel budgetModel) {
+    public BudgetView(Context context, BudgetModel budgetModel, LinearLayout transactionsLinearLayout) {
         super(context);
+        this.transactionsLinearLayout = transactionsLinearLayout;
         this.budgetModel = budgetModel;
         init(context);
         setupLayout(context);
     }
     private void viewBudgetDetails(){
+        BudgetDetailsDialog budgetDetailsDialog = new BudgetDetailsDialog(getContext(), budgetModel, transactionsLinearLayout);
 
+        budgetDetailsDialog.show();
     }
     private void setupLayout(Context context) {
         float scale = getResources().getDisplayMetrics().density;

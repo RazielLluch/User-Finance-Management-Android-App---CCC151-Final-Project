@@ -44,6 +44,8 @@ public class TransactionView extends LinearLayout {
         transactionName.setText(expenseModel.getName());
         expenseDate.setText(expenseModel.getDate());
         expenseText.setText(String.valueOf(expenseModel.getPrice()));
+
+
     }
 
     // Add setters for the text views to customize the view

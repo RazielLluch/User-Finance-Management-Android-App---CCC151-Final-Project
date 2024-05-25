@@ -46,7 +46,9 @@ public class BudgetFragment extends Fragment implements AdapterView.OnItemSelect
 
     private void initViews(View view){
 
+        transactionsLinearLayout = view.findViewById(R.id.transactions_linear_layout);
         button = view.findViewById(R.id.add_transaction_button);
+
         button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -54,10 +56,7 @@ public class BudgetFragment extends Fragment implements AdapterView.OnItemSelect
             }
         });
 
-        transactionsLinearLayout = view.findViewById(R.id.transactions_linear_layout);
-
-//        setExpense(TestData.getMoney());
-
+        getDataFromDatabase();
     }
 
     @Override
@@ -68,8 +67,12 @@ public class BudgetFragment extends Fragment implements AdapterView.OnItemSelect
 
         // Initialize views using the inflated view
         initViews(view);
-
         //retrieve all budgets
+
+        return view;
+    }
+
+    private void getDataFromDatabase(){
         List<BudgetModel> budgets = budgetDao.getAllBudgets();
 
         //add all budgets into the list view of budgets
@@ -84,16 +87,35 @@ public class BudgetFragment extends Fragment implements AdapterView.OnItemSelect
                 sum += expense.getPrice();
             }
 
-            BudgetView newBudgetView = new BudgetView(getContext(), budget);
+            BudgetView newBudgetView = new BudgetView(getContext(), budget, transactionsLinearLayout);
             newBudgetView.setId(View.generateViewId());
             newBudgetView.setBudgetName(budget.getBudgetName());
             newBudgetView.setProgress((int)sum);
             newBudgetView.setProgressTxt(sum + " / " + budget.getAmount());
 
+
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            );
+
+            int leftMarginInDp = 10;
+            int topMarginInDp = 10;
+            int rightMarginInDp = 10;
+            int bottomMarginInDp = 0;
+
+            float scale = getResources().getDisplayMetrics().density;
+            int leftMarginInPixels = (int) (leftMarginInDp * scale + 0.5f);
+            int topMarginInPixels = (int) (topMarginInDp * scale + 0.5f);
+            int rightMarginInPixels = (int) (rightMarginInDp * scale + 0.5f);
+            int bottomMarginInPixels = (int) (bottomMarginInDp * scale + 0.5f);
+
+            layoutParams.setMargins(leftMarginInPixels, topMarginInPixels, rightMarginInPixels, bottomMarginInPixels);
+
+            newBudgetView.setLayoutParams(layoutParams);
+
             transactionsLinearLayout.addView(newBudgetView);
         }
-
-        return view;
     }
 
     /**
@@ -155,7 +177,7 @@ public class BudgetFragment extends Fragment implements AdapterView.OnItemSelect
 //                    Toast.makeText(getContext(), newBudget.toString(), Toast.LENGTH_SHORT).show();
                     System.out.println(newBudget.toString());
 
-                    BudgetView newBudgetView = new BudgetView(getContext(), newBudget);
+                    BudgetView newBudgetView = new BudgetView(getContext(), newBudget, transactionsLinearLayout);
                     newBudgetView.setId(View.generateViewId());
                     newBudgetView.setBudgetName(newBudgetName.getText().toString());
 

@@ -89,27 +89,6 @@
                     />
 
             </LinearLayout>
-
         </ScrollView>
-
-
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/add_transaction_button"
-            android:layout_margin="15dp"
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="@id/transactions_constraint_layout"
-            app:layout_constraintBottom_toBottomOf="@id/transactions_constraint_layout"
-            app:layout_anchor="@id/transactions_constraint_layout"
-            android:src="@drawable/plus_icon"
-            android:backgroundTint="@color/tertiary"
-            android:contentDescription="add new budget"
-            />
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 </FrameLayout>
