@@ -1,9 +1,8 @@
-package com.example.ccc151finalproject;
+package com.example.ccc151finalproject.views;
 
 import android.content.Context;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -12,7 +11,8 @@ import android.widget.TextView;
 
 import androidx.core.content.res.ResourcesCompat;
 
-import com.example.ccc151finalproject.models.BudgetModel;
+import com.example.ccc151finalproject.R;
+import com.example.ccc151finalproject.database.models.BudgetModel;
 
 public class BudgetView extends LinearLayout {
 
@@ -101,7 +101,6 @@ public class BudgetView extends LinearLayout {
                 1f
         );
         progressBar.setLayoutParams(progressBarParams);
-
         progressBar.setMax(budgetModel.getAmount());
         progressBar.setProgress(0);
     }

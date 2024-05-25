@@ -1,4 +1,4 @@
-package com.example.ccc151finalproject.models;
+package com.example.ccc151finalproject.database.models;
 
 import androidx.room.Entity;
 import androidx.room.Index;

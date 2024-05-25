@@ -1,4 +1,4 @@
-package com.example.ccc151finalproject;
+package com.example.ccc151finalproject.fragments;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -20,9 +20,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Spinner;
 
-import com.example.ccc151finalproject.dao.BudgetDao;
-import com.example.ccc151finalproject.models.BudgetModel;
-import com.example.ccc151finalproject.models.TestData;
+import com.example.ccc151finalproject.R;
+import com.example.ccc151finalproject.database.dao.BudgetDao;
+import com.example.ccc151finalproject.database.MyAppDatabase;
+import com.example.ccc151finalproject.database.models.BudgetModel;
+import com.example.ccc151finalproject.database.models.TestData;
+import com.example.ccc151finalproject.views.BudgetView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -34,12 +37,10 @@ public class BudgetFragment extends Fragment implements AdapterView.OnItemSelect
     private ProgressBar monthlyProgressBar, weeklyProgessBar, dailyProgressBar;
     private TextView monthlyProgressTxt, weeklyProgressTxt, dailyProgressTxt;
     private LinearLayout transactionsLinearLayout;
-
-    Dialog dialog;
-    String timeFrame;
-
-    MyAppDatabase db = MyAppDatabase.getMyAppDatabase(getContext());
-    BudgetDao budgetDao = db.budgetDao();
+    private Dialog dialog;
+    private String timeFrame;
+    private MyAppDatabase db = MyAppDatabase.getMyAppDatabase(getContext());
+    private BudgetDao budgetDao = db.budgetDao();
 
     private void initViews(View view){
 
@@ -53,7 +54,7 @@ public class BudgetFragment extends Fragment implements AdapterView.OnItemSelect
 
         transactionsLinearLayout = view.findViewById(R.id.transactions_linear_layout);
 
-        setExpense(TestData.getMoney());
+//        setExpense(TestData.getMoney());
 
     }
 

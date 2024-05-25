@@ -1,10 +1,8 @@
-package com.example.ccc151finalproject.models;
+package com.example.ccc151finalproject.database.models;
 
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
-
-import com.example.ccc151finalproject.models.BudgetModel;
 
 @Entity(tableName = "Expense",
         foreignKeys = @ForeignKey(entity = BudgetModel.class,
