@@ -2,7 +2,6 @@ package com.example.ccc151finalproject.fragments;
 
 import android.os.Bundle;
 import android.app.Dialog;
-
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
-
 import com.example.ccc151finalproject.dialogs.NewTransactionDialog;
 import com.example.ccc151finalproject.R;
 import com.example.ccc151finalproject.database.dao.ExpenseDao;
@@ -63,7 +61,7 @@ public class TransactionsFragment extends Fragment {
     }
 
     private void openNewTransactionDialog(ExpenseDao expenseDao){
-        Dialog dialog = new NewTransactionDialog(getContext(), transactionsLinearLayout, expenseDao);
+        Dialog dialog = new NewTransactionDialog(getContext(), transactionsLinearLayout, db);
         dialog.show();
     }
 }

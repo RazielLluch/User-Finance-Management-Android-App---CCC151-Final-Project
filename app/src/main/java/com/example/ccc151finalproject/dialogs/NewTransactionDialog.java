@@ -11,9 +11,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-
+import java.util.List;
 import com.example.ccc151finalproject.R;
+import com.example.ccc151finalproject.database.MyAppDatabase;
+import com.example.ccc151finalproject.database.dao.BudgetDao;
 import com.example.ccc151finalproject.database.dao.ExpenseDao;
+import com.example.ccc151finalproject.database.models.BudgetModel;
 import com.example.ccc151finalproject.database.models.ExpenseModel;
 import com.example.ccc151finalproject.views.TransactionView;
 
@@ -26,11 +29,16 @@ public class NewTransactionDialog extends Dialog {
     private LinearLayout transactionsLinearLayout;
     private Button closeButton, addButton;
     private ExpenseDao expenseDao;
+    private BudgetDao budgetDao;
     private EditText expenseName, expenseDesc, expensePrice;
-    private Spinner typeDropdown;
+    private Spinner typeDropdown, budgetDropdown;
     private String[] types = {"other", "food", "transportation", "entertainment", "shopping/grocery", "health/cosmetics", "education"};
+    private String[] budgets;
     private String selectedType;
-    ArrayAdapter<String> adapter;
+    private String selectedBudget;
+    private int selectedBudgetIndex;
+
+    ArrayAdapter<String> typeAdapter, budgetAdapter;
 
     private void init(){
         setContentView(R.layout.new_transaction_dialog);
@@ -38,12 +46,28 @@ public class NewTransactionDialog extends Dialog {
         expenseName = findViewById(R.id.expense_name_field);
         expenseDesc = findViewById(R.id.expense_desc_field);
         typeDropdown = findViewById(R.id.type_dropdown);
+        budgetDropdown = findViewById(R.id.budget_dropdown);
         expensePrice = findViewById(R.id.expense_price_field);
 
         // Set up the spinner with an adapter
-        adapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, types);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        typeDropdown.setAdapter(adapter);
+        typeAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, types);
+        typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        typeDropdown.setAdapter(typeAdapter);
+
+        List<BudgetModel> budgetModels = budgetDao.getAllBudgets();
+
+        budgets = new String[budgetModels.size()];
+
+        for(int i = 0; i < budgetModels.size(); i++){
+            System.out.println(budgetModels.get(i).getBudgetName().toString());
+
+            budgets[i] = budgetModels.get(i).getBudgetName().toString();
+        }
+
+
+        budgetAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, budgets);
+        budgetAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        budgetDropdown.setAdapter(budgetAdapter);
 
         typeDropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -58,16 +82,32 @@ public class NewTransactionDialog extends Dialog {
             }
         });
 
+        budgetDropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedBudget = budgets[position];
+                selectedBudgetIndex = budgetModels.get(position).getId();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Default to the first item if nothing is selected
+                selectedBudget = budgets[0];
+                selectedBudgetIndex = budgetModels.get(0).getId();
+            }
+        });
+
         closeButton = findViewById(R.id.close_button);
         addButton = findViewById(R.id.add_button);
         closeButton.setOnClickListener(v -> this.dismiss());
         addButton.setOnClickListener(v -> addNewTransaction());
     }
 
-    public NewTransactionDialog(Context context, LinearLayout transactionsLinearLayout, ExpenseDao expenseDao) {
+    public NewTransactionDialog(Context context, LinearLayout transactionsLinearLayout, MyAppDatabase db) {
         super(context);
         this.transactionsLinearLayout = transactionsLinearLayout;
-        this.expenseDao = expenseDao;
+        this.expenseDao = db.expenseDao();
+        this.budgetDao = db.budgetDao();
         this.context = context;
         init();
     }
@@ -91,7 +131,7 @@ public class NewTransactionDialog extends Dialog {
         String formattedDate = sdf.format(calendar.getTime());
 
         //test sample expense
-        ExpenseModel expenseModel = new ExpenseModel(expenseName.getText().toString(), expenseDesc.getText().toString(), "food", formattedDate, Double.parseDouble(expensePrice.getText().toString()), 1);
+        ExpenseModel expenseModel = new ExpenseModel(expenseName.getText().toString(), expenseDesc.getText().toString(), "food", formattedDate, Double.parseDouble(expensePrice.getText().toString()), selectedBudgetIndex);
 
         try{
             expenseDao.insertExpense(expenseModel);

@@ -120,7 +120,7 @@ public class BudgetFragment extends Fragment implements AdapterView.OnItemSelect
         String[] items = new String[]{"Monthly", "Weekly", "Daily"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, items);
         timeframeDropdown.setAdapter(adapter);
-        timeframeDropdown.setBackgroundResource(R.drawable.dropdown_background);
+//        timeframeDropdown.setBackgroundResource(R.drawable.dropdown_background);
         timeframeDropdown.setOnItemSelectedListener(this);
 
 
