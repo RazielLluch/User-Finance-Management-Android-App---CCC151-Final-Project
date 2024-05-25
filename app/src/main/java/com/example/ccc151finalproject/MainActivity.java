@@ -5,19 +5,15 @@ import androidx.fragment.app.Fragment;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.room.Room;
 
-import com.example.ccc151finalproject.dao.BudgetDao;
-import com.example.ccc151finalproject.dao.ExpenseDao;
-import com.example.ccc151finalproject.dao.SavingsDao;
-import com.example.ccc151finalproject.dao.UserDao;
+import com.example.ccc151finalproject.database.dao.UserDao;
+import com.example.ccc151finalproject.database.MyAppDatabase;
 import com.example.ccc151finalproject.databinding.ActivityMainBinding;
-import com.example.ccc151finalproject.models.BudgetModel;
-import com.example.ccc151finalproject.models.ExpenseModel;
-import com.example.ccc151finalproject.models.SavingsModel;
-import com.example.ccc151finalproject.models.UserModel;
-
-import java.util.List;
+import com.example.ccc151finalproject.database.models.UserModel;
+import com.example.ccc151finalproject.fragments.AccountFragment;
+import com.example.ccc151finalproject.fragments.AnalyticsFragment;
+import com.example.ccc151finalproject.fragments.BudgetFragment;
+import com.example.ccc151finalproject.fragments.TransactionsFragment;
 
 public class MainActivity extends AppCompatActivity {
 
