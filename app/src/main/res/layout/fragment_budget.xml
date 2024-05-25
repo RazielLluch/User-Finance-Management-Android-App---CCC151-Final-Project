@@ -33,7 +33,7 @@
             <LinearLayout
                 android:id="@+id/transactions_linear_layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:paddingBottom="15dp"
                 android:orientation="vertical"
                 android:elevation="100000000dp"

@@ -33,7 +33,7 @@
             <LinearLayout
                 android:id="@+id/transactions_linear_layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
                 >
 
@@ -46,12 +46,10 @@
                     android:fontFamily="@font/inter_extrabold"
                     android:textSize="20sp"
                     android:textAlignment="center"
-                    android:text="Your spending activity:"
+                    android:text="@string/your_spending_activity"
                     />
 
                 <RelativeLayout
-                    xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:tools="http://schemas.android.com/tools"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     tools:context=".MainActivity">
@@ -64,28 +62,7 @@
                         />
                     
                 </RelativeLayout>
-
-
-
             </LinearLayout>
-
         </ScrollView>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/add_transaction_button"
-            android:layout_margin="15dp"
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="@id/transactions_constraint_layout"
-            app:layout_constraintBottom_toBottomOf="@id/transactions_constraint_layout"
-            app:layout_anchor="@id/transactions_constraint_layout"
-            android:src="@drawable/plus_icon"
-            android:backgroundTint="@color/tertiary"
-            android:contentDescription="add new budget"
-            />
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </FrameLayout>

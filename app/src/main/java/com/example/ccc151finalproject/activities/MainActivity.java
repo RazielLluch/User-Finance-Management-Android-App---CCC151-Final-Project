@@ -18,12 +18,10 @@ import com.example.ccc151finalproject.fragments.TransactionsFragment;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ActivityMainBinding binding;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        com.example.ccc151finalproject.databinding.ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         MyAppDatabase db = MyAppDatabase.getMyAppDatabase(this);
@@ -40,21 +38,6 @@ public class MainActivity extends AppCompatActivity {
         );
 
         userDao.insertUser(firstUser);
-
-//        List<UserModel> users = userDao.getAllUsers();
-//
-//// Example usage of BudgetDao
-//        BudgetDao budgetDao = db.budgetDao();
-//        List<BudgetModel> budgets = budgetDao.getAllBudgets();
-//
-//// Example usage of ExpenseDao
-//        ExpenseDao expenseDao = db.expenseDao();
-//        List<ExpenseModel> expenses = expenseDao.getAllExpenses();
-//
-//// Example usage of SavingsDao
-//        SavingsDao savingsDao = db.savingsDao();
-//        List<SavingsModel> savings = savingsDao.getAllSavings();
-
 
 
         replaceFragment(new AnalyticsFragment());

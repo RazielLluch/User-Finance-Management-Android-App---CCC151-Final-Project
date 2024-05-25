@@ -24,14 +24,13 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 public class AnalyticsFragment extends Fragment {
-    private BarChart barGraph;
     private final MyAppDatabase db = MyAppDatabase.getMyAppDatabase(getContext());
     private final ExpenseDao expenseDao = db.expenseDao();
 
-    private List<String> types = Arrays.asList("othr", "food", "trnspo", "entr", "shop/grcry", "hlth", "edu");
+    private final List<String> types = Arrays.asList("othr", "food", "trnspo", "entr", "shop/grcry", "hlth", "edu");
 
     private void init(View view){
-        barGraph = view.findViewById(R.id.barchart);
+        BarChart barGraph = view.findViewById(R.id.barchart);
 
         barGraph.getAxisRight().setDrawLabels(false);
 
@@ -41,14 +40,14 @@ public class AnalyticsFragment extends Fragment {
 
         float[] values = new float[7];
         for(int i = 0; i < expenses.size(); i++){
-            switch(expenses.get(i).getType().toLowerCase()){
-                case "other": values[0] += expenses.get(i).getPrice(); break;
-                case "food": values[1] += expenses.get(i).getPrice(); break;
-                case "transportation": values[2] += expenses.get(i).getPrice(); break;
-                case "entertainment": values[3] += expenses.get(i).getPrice(); break;
-                case "shopping/grocery": values[4] += expenses.get(i).getPrice(); break;
-                case "health/cosmetics": values[5] += expenses.get(i).getPrice(); break;
-                case "education": values[6] += expenses.get(i).getPrice(); break;
+            switch (expenses.get(i).getType().toLowerCase()) {
+                case "other" -> values[0] += expenses.get(i).getPrice();
+                case "food" -> values[1] += expenses.get(i).getPrice();
+                case "transportation" -> values[2] += expenses.get(i).getPrice();
+                case "entertainment" -> values[3] += expenses.get(i).getPrice();
+                case "shopping/grocery" -> values[4] += expenses.get(i).getPrice();
+                case "health/cosmetics" -> values[5] += expenses.get(i).getPrice();
+                case "education" -> values[6] += expenses.get(i).getPrice();
             }
         }
 
@@ -57,9 +56,12 @@ public class AnalyticsFragment extends Fragment {
             entries.add(new BarEntry(i, values[i]));
         }
 
+        Arrays.sort(values);
+        float max = values[values.length - 1];
+
         YAxis yAxis = barGraph.getAxisLeft();
         yAxis.setAxisMinimum(0f);
-        yAxis.setAxisMaximum(1000f);
+        yAxis.setAxisMaximum(max + 100);
         yAxis.setAxisLineWidth(2f);
         yAxis.setAxisLineColor(Color.BLACK);
         yAxis.setLabelCount(10);
@@ -93,14 +95,14 @@ public class AnalyticsFragment extends Fragment {
         int[] count = {0, 0, 0, 0, 0, 0, 0};
 
         for(ExpenseModel expense : allExpenses){
-            switch (expense.getType().toLowerCase()){
-                case "other" : count[0]++; break;
-                case "food" : count[1]++; break;
-                case "transportation" : count[2]++; break;
-                case "entertainment" : count[3]++; break;
-                case "shopping/grocery" : count[4]++; break;
-                case "health/cosmetics" : count[5]++; break;
-                case "education" : count[6]++; break;
+            switch (expense.getType().toLowerCase()) {
+                case "other" -> count[0]++;
+                case "food" -> count[1]++;
+                case "transportation" -> count[2]++;
+                case "entertainment" -> count[3]++;
+                case "shopping/grocery" -> count[4]++;
+                case "health/cosmetics" -> count[5]++;
+                case "education" -> count[6]++;
             }
         }
 

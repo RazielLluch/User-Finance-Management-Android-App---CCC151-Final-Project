@@ -26,24 +26,20 @@ public class TransactionsFragment extends Fragment {
     private static final String TAG = "TransactionsFragment";
     private MyAppDatabase db;
     private ExpenseDao expenseDao;
-    private FloatingActionButton button;
     private LinearLayout transactionsLinearLayout;
     private ScrollView transactionsScrollView;
     private ConstraintLayout transactionConstraintLayout;
 
 
     private void initViews(View view){
-        button = view.findViewById(R.id.add_transaction_button);
-        button.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
+        FloatingActionButton button = view.findViewById(R.id.add_transaction_button);
+        button.setOnClickListener(v -> {
 
-                BudgetDao budgetDao = db.budgetDao();
+            BudgetDao budgetDao = db.budgetDao();
 
-                if(budgetDao.getNumberOfBudgets() != 0) openNewTransactionDialog(expenseDao);
-                else Toast.makeText(getContext(), "You don't have any budgets!", Toast.LENGTH_SHORT).show();
+            if(budgetDao.getNumberOfBudgets() != 0) openNewTransactionDialog(expenseDao);
+            else Toast.makeText(getContext(), "You don't have any budgets!", Toast.LENGTH_SHORT).show();
 
-            }
         });
 
         transactionsLinearLayout = view.findViewById(R.id.transactions_linear_layout);

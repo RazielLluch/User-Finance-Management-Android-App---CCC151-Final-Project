@@ -2,16 +2,14 @@ package com.example.ccc151finalproject.fragments;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
+import androidx.fragment.app.Fragment;
 import com.example.ccc151finalproject.R;
 import com.example.ccc151finalproject.database.MyAppDatabase;
-import com.example.ccc151finalproject.database.dao.BudgetDao;
 import com.example.ccc151finalproject.database.dao.UserDao;
 import com.example.ccc151finalproject.database.models.UserModel;
 
@@ -19,24 +17,18 @@ public class AccountFragment extends Fragment {
 
     private final MyAppDatabase db = MyAppDatabase.getMyAppDatabase(getContext());
     private final UserDao userDao = db.userDao();
-    private TextView userName, accountName;
-    private UserModel user;
-    private Button logoutButton;
-    private void init(View view){
-        userName = view.findViewById(R.id.user_name);
-        accountName = view.findViewById(R.id.account_name);
-        logoutButton = view.findViewById(R.id.logout_button);
 
-        user = userDao.getUserById(1);
-        userName.setText(user.getFirstName() + " " + user.getMiddleName() + " " + user.getLastName());
+    private void init(View view){
+        TextView userName = view.findViewById(R.id.user_name);
+        TextView accountName = view.findViewById(R.id.account_name);
+        Button logoutButton = view.findViewById(R.id.logout_button);
+
+        UserModel user = userDao.getUserById(1);
+        String username = user.getFirstName() + " " + user.getMiddleName() + " " + user.getLastName();
+        userName.setText(username);
         accountName.setText(user.getUsername());
 
-        logoutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                logout();
-            }
-        });
+        logoutButton.setOnClickListener(v -> logout());
     }
 
     @Override
