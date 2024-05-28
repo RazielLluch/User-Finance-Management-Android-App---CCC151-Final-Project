@@ -3,6 +3,7 @@ package com.example.ccc151finalproject.dialogs;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -47,9 +48,18 @@ public class BudgetDetailsDialog extends Dialog {
             transactionsLinearLayout2.addView(transactionView);
         }
 
-
+        Button addSaving = findViewById(R.id.add_saving_button);
         Button closeButton = findViewById(R.id.close_button);
         Button deleteButton = findViewById(R.id.delete_button);
+
+        addSaving.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NewSavingDialog savingsDialog = new NewSavingDialog(getContext(), budgetModel);
+
+                savingsDialog.show();
+            }
+        });
 
         closeButton.setOnClickListener(v -> INSTANCE.dismiss());
 

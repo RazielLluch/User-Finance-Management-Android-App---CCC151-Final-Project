@@ -2,6 +2,8 @@ package com.example.ccc151finalproject.fragments;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -62,7 +64,12 @@ public class BudgetFragment extends Fragment implements AdapterView.OnItemSelect
     }
 
     private void getDataFromDatabase(){
-        List<BudgetModel> budgets = budgetDao.getAllBudgets();
+
+        SharedPreferences sharedPreferences;
+        sharedPreferences = requireContext().getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
+        int userId = sharedPreferences.getInt("user_id", 0);
+
+        List<BudgetModel> budgets = budgetDao.getAllBudgetsOfUser(userId);
 
         //add all budgets into the list view of budgets
         for(BudgetModel budget : budgets){

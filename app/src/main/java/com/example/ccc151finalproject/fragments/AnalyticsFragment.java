@@ -1,5 +1,7 @@
 package com.example.ccc151finalproject.fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
@@ -8,7 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.example.ccc151finalproject.R;
 import com.example.ccc151finalproject.database.MyAppDatabase;
+import com.example.ccc151finalproject.database.dao.BudgetDao;
 import com.example.ccc151finalproject.database.dao.ExpenseDao;
+import com.example.ccc151finalproject.database.models.BudgetModel;
 import com.example.ccc151finalproject.database.models.ExpenseModel;
 
 import java.util.ArrayList;
@@ -24,6 +28,8 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 public class AnalyticsFragment extends Fragment {
+    private SharedPreferences sharedPreferences;
+    private int userId;
     private final MyAppDatabase db = MyAppDatabase.getMyAppDatabase(getContext());
     private final ExpenseDao expenseDao = db.expenseDao();
 
@@ -34,20 +40,29 @@ public class AnalyticsFragment extends Fragment {
 
         barGraph.getAxisRight().setDrawLabels(false);
 
-        List<ExpenseModel> expenses = expenseDao.getAllExpenses();
+        BudgetDao budgetDao = db.budgetDao();
+
+        List<BudgetModel> budgetOfThisUser = budgetDao.getAllBudgetsOfUser(userId);
+        List<ExpenseModel> expenses = new ArrayList<ExpenseModel>();
+
+        for(BudgetModel budget : budgetOfThisUser){
+            expenses.addAll(expenseDao.getAllExpensesOfBudget(budget.getId()));
+        }
 
         ArrayList<BarEntry> entries = new ArrayList<>();
 
-        float[] values = new float[7];
-        for(int i = 0; i < expenses.size(); i++){
-            switch (expenses.get(i).getType().toLowerCase()) {
-                case "other" -> values[0] += expenses.get(i).getPrice();
-                case "food" -> values[1] += expenses.get(i).getPrice();
-                case "transportation" -> values[2] += expenses.get(i).getPrice();
-                case "entertainment" -> values[3] += expenses.get(i).getPrice();
-                case "shopping/grocery" -> values[4] += expenses.get(i).getPrice();
-                case "health/cosmetics" -> values[5] += expenses.get(i).getPrice();
-                case "education" -> values[6] += expenses.get(i).getPrice();
+        float[] values = {0 ,0 ,0 ,0, 0, 0 ,0};
+        if(!expenses.isEmpty()){
+            for (int i = 0; i < expenses.size(); i++) {
+                switch (expenses.get(i).getType().toLowerCase()) {
+                    case "other" -> values[0] += expenses.get(i).getPrice();
+                    case "food" -> values[1] += expenses.get(i).getPrice();
+                    case "transportation" -> values[2] += expenses.get(i).getPrice();
+                    case "entertainment" -> values[3] += expenses.get(i).getPrice();
+                    case "shopping/grocery" -> values[4] += expenses.get(i).getPrice();
+                    case "health/cosmetics" -> values[5] += expenses.get(i).getPrice();
+                    case "education" -> values[6] += expenses.get(i).getPrice();
+                }
             }
         }
 
@@ -85,24 +100,29 @@ public class AnalyticsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_analytics, container, false);
+        sharedPreferences = requireContext().getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
+        userId = sharedPreferences.getInt("user_id", 0);
         init(view);
         return view;
     }
 
     protected int[] countTypesOfExpense(){
-        List<ExpenseModel> allExpenses = expenseDao.getAllExpenses();
+
+        List<ExpenseModel> allExpenses = expenseDao.getAllExpensesOfUser(userId);
 
         int[] count = {0, 0, 0, 0, 0, 0, 0};
 
-        for(ExpenseModel expense : allExpenses){
-            switch (expense.getType().toLowerCase()) {
-                case "other" -> count[0]++;
-                case "food" -> count[1]++;
-                case "transportation" -> count[2]++;
-                case "entertainment" -> count[3]++;
-                case "shopping/grocery" -> count[4]++;
-                case "health/cosmetics" -> count[5]++;
-                case "education" -> count[6]++;
+        if(!allExpenses.isEmpty()){
+            for (ExpenseModel expense : allExpenses) {
+                switch (expense.getType().toLowerCase()) {
+                    case "other" -> count[0]++;
+                    case "food" -> count[1]++;
+                    case "transportation" -> count[2]++;
+                    case "entertainment" -> count[3]++;
+                    case "shopping/grocery" -> count[4]++;
+                    case "health/cosmetics" -> count[5]++;
+                    case "education" -> count[6]++;
+                }
             }
         }
 

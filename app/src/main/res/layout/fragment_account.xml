@@ -51,9 +51,22 @@
                     />
 
                 <TextView
+                    android:id="@+id/savings"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="1dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_semibold"
+                    android:textAlignment="center"
+                    android:textSize="20sp"
+                    android:text="savings: "
+                    />
+
+                <TextView
                     android:id="@+id/user_name"
                     android:layout_marginHorizontal="10dp"
-                    android:layout_marginTop="70dp"
+                    android:layout_marginTop="30dp"
                     android:layout_marginBottom="1dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

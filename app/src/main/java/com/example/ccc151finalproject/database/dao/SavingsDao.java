@@ -21,6 +21,9 @@ public interface SavingsDao {
     @Query("SELECT * FROM Savings WHERE id = :savingsId")
     SavingsModel getSavingsById(int savingsId);
 
+    @Query("SELECT * FROM Savings WHERE Savings.budgetId = :budgetId")
+    List<SavingsModel> getAllSavingsOfBudget(int budgetId);
+
     @Insert
     void insertSavings(SavingsModel savings);
 

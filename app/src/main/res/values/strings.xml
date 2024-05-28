@@ -7,4 +7,5 @@
     <string name="transactions">transactions</string>
     <string name="analytics">analytics</string>
     <string name="account">account</string>
+    <string name="add_saving">add saving</string>
 </resources>

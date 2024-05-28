@@ -6,9 +6,7 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
-
 import com.example.ccc151finalproject.database.models.UserModel;
-
 import java.util.List;
 
 /**
@@ -16,14 +14,18 @@ import java.util.List;
  */
 @Dao
 public interface UserDao {
+
     @Query("SELECT * FROM User")
     List<UserModel> getAllUsers();
 
     @Query("SELECT * FROM User WHERE id = :userId")
     UserModel getUserById(int userId);
 
+    @Query("SELECT * FROM User WHERE User.username = :username AND User.password = :password")
+    UserModel signIn(String username, String password);
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insertUser(UserModel user);
+    long signUp(UserModel user);
 
     @Update
     void updateUser(UserModel user);

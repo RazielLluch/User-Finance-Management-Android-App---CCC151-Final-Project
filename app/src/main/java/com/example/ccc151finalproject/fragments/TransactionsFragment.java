@@ -1,5 +1,7 @@
 package com.example.ccc151finalproject.fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.app.Dialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -54,7 +56,11 @@ public class TransactionsFragment extends Fragment {
         expenseDao = db.expenseDao();
         initViews(view);
 
-        List<ExpenseModel> allExpenses = expenseDao.getAllExpenses();
+        SharedPreferences sharedPreferences;
+        sharedPreferences = requireContext().getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
+        int userId = sharedPreferences.getInt("user_id", 0);
+
+        List<ExpenseModel> allExpenses = expenseDao.getAllExpensesOfUser(userId);
         for(ExpenseModel expense : allExpenses){
             TransactionView newTransactionView = new TransactionView(getContext(), expense);
             newTransactionView.setId(View.generateViewId());

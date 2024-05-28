@@ -26,20 +26,6 @@ public class MainActivity extends AppCompatActivity {
 
         MyAppDatabase db = MyAppDatabase.getMyAppDatabase(this);
 
-        // Example usage of UserDao
-        UserDao userDao = db.userDao();
-
-        UserModel firstUser = new UserModel(
-                "Josiah Raziel",
-                "Sermon",
-                "Lluch",
-                "raze955",
-                "1234"
-        );
-
-        userDao.insertUser(firstUser);
-
-
         replaceFragment(new AnalyticsFragment());
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
 
