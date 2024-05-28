@@ -1,5 +1,6 @@
 package com.example.ccc151finalproject.fragments;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -21,6 +22,7 @@ import com.example.ccc151finalproject.database.models.BudgetModel;
 import com.example.ccc151finalproject.database.models.ExpenseModel;
 import com.example.ccc151finalproject.database.models.SavingsModel;
 import com.example.ccc151finalproject.database.models.UserModel;
+import com.example.ccc151finalproject.dialogs.ConfirmLogoutDialog;
 
 import org.w3c.dom.Text;
 
@@ -89,14 +91,16 @@ public class AccountFragment extends Fragment {
 
     //TODO continue making the login/register/logout features
     private void logout() {
+
+
+
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean("is_logged_in", false);
         editor.apply();
 
-        Intent backToLogin = new Intent(getActivity(), LoginActivity.class);
-        backToLogin.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(backToLogin);
-        getActivity().finish();
+        ConfirmLogoutDialog confirmDialog = new ConfirmLogoutDialog(getContext(), getActivity());
+
+        confirmDialog.show();
 
     }
 }
