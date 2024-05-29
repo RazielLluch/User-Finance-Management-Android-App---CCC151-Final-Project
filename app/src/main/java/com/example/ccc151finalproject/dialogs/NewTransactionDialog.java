@@ -129,7 +129,7 @@ public class NewTransactionDialog extends Dialog {
         String formattedDate = sdf.format(calendar.getTime());
 
         //test sample expense
-        ExpenseModel expenseModel = new ExpenseModel(expenseName.getText().toString(), expenseDesc.getText().toString(), "food", formattedDate, Double.parseDouble(expensePrice.getText().toString()), selectedBudgetIndex);
+        ExpenseModel expenseModel = new ExpenseModel(expenseName.getText().toString(), expenseDesc.getText().toString(), selectedType, formattedDate, Double.parseDouble(expensePrice.getText().toString()), selectedBudgetIndex);
 
         try{
             expenseDao.insertExpense(expenseModel);

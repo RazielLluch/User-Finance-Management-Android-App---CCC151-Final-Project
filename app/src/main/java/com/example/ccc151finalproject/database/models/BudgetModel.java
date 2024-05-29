@@ -56,7 +56,7 @@ public class BudgetModel {
         this.timeframe = timeframe;
         this.amount = amount;
         this.startDate = startDate;
-        setEndDateFromStartDate(timeframe, startDate);
+        setEndDateFromStartDate(timeframe.toLowerCase(), startDate);
         this.userId = userId;
     }
 
