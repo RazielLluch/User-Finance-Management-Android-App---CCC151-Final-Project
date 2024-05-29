@@ -1,4 +1,4 @@
-package com.example.ccc151finalproject;
+package com.example.ccc151finalproject.activities;
 
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
@@ -6,18 +6,25 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.ccc151finalproject.R;
+import com.example.ccc151finalproject.database.dao.UserDao;
+import com.example.ccc151finalproject.database.MyAppDatabase;
 import com.example.ccc151finalproject.databinding.ActivityMainBinding;
+import com.example.ccc151finalproject.database.models.UserModel;
+import com.example.ccc151finalproject.fragments.AccountFragment;
+import com.example.ccc151finalproject.fragments.AnalyticsFragment;
+import com.example.ccc151finalproject.fragments.BudgetFragment;
+import com.example.ccc151finalproject.fragments.TransactionsFragment;
 
 public class MainActivity extends AppCompatActivity {
-
-    private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        com.example.ccc151finalproject.databinding.ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        MyAppDatabase db = MyAppDatabase.getMyAppDatabase(this);
 
         replaceFragment(new AnalyticsFragment());
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
@@ -40,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void replaceFragment(Fragment fragment){
+    public void replaceFragment(Fragment fragment){
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 

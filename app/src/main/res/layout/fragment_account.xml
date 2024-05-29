@@ -3,24 +3,105 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AccountFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.AccountFragment"
+    android:background="#e8e8e8">
 
-    <!-- TODO: Update blank fragment layout -->
-
-    <LinearLayout
-        android:layout_marginVertical="10dp"
-        android:layout_marginHorizontal="10dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/transactions_constraint_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
 
-        <TextView
-            android:layout_margin="10dp"
+        <ScrollView
+            android:id="@+id/transactions_scroll_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="JUAN DELA CRUZ"
-            />
+            android:minHeight="200dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginHorizontal="20dp"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:background="@drawable/custom_border"
+            android:backgroundTint="#ffffff"
+            >
 
-    </LinearLayout>
+            <LinearLayout
+                android:id="@+id/transactions_linear_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:elevation="100000000dp"
+                android:background="@drawable/custom_border"
+                android:backgroundTint="#ffffff"
+                >
 
+                <TextView
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="1dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_black"
+                    android:textAlignment="center"
+                    android:textSize="30sp"
+                    android:text="Account"
+                    />
 
+                <TextView
+                    android:id="@+id/savings"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="1dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_semibold"
+                    android:textAlignment="center"
+                    android:textSize="20sp"
+                    android:text="savings: "
+                    />
+
+                <TextView
+                    android:id="@+id/user_name"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="1dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_bold"
+                    android:textAlignment="center"
+                    android:textSize="20sp"
+                    android:text="username"
+                    />
+
+                <TextView
+                    android:id="@+id/account_name"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginBottom="1dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_semibold"
+                    android:textAlignment="center"
+                    android:textSize="15sp"
+                    android:text="fullname"
+                    />
+
+                <Button
+                    android:id="@+id/logout_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/inter_extrabold"
+                    android:text="LOG OUT"
+                    android:backgroundTint="@color/secondary"
+                    />
+
+            </LinearLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
