@@ -24,6 +24,9 @@ public interface BudgetDao {
     @Query("SELECT * FROM Budget WHERE Budget.userId = :userId")
     List<BudgetModel> getAllBudgetsOfUser(int userId);
 
+    @Query("SELECT COUNT(*) FROM Budget")
+    int getNumberOfBudgets();
+
     @Insert
     void insertBudget(BudgetModel budget);
 

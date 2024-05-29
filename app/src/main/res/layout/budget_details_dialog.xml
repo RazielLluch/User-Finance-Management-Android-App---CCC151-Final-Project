@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="400dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:maxHeight="600dp"
+    android:minWidth="350dp"
+    android:maxHeight="5000dp"
     android:orientation="vertical">
 
     <TextView
@@ -15,7 +17,7 @@
         android:textAlignment="center"
         android:textSize="19sp"
         android:text="budget name"
-        />
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/timeframe_txt"
@@ -27,13 +29,14 @@
         android:textAlignment="center"
         android:textSize="19sp"
         android:text="budget timeframe: "
-        />
+        tools:ignore="HardcodedText" />
 
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
             android:layout_marginVertical="10dp"
             android:layout_gravity="center"
             >
@@ -43,24 +46,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minWidth="170dp"
-                android:layout_marginRight="15dp"
+                android:layout_marginEnd="10dp"
                 android:fontFamily="@font/inter_bold"
                 android:textAlignment="textStart"
-                android:textSize="19sp"
+                android:textSize="16sp"
                 android:text="from"
-                />
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/end_date_txt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minWidth="140dp"
-                android:layout_marginLeft="15dp"
+                android:minWidth="170dp"
+                android:layout_marginStart="10dp"
                 android:fontFamily="@font/inter_bold"
                 android:textAlignment="textStart"
-                android:textSize="19sp"
+                android:textSize="16sp"
                 android:text="to"
-                />
+                tools:ignore="HardcodedText" />
 
         </LinearLayout>
 
@@ -72,7 +75,7 @@
         android:layout_gravity="center"
         android:textSize="19sp"
         android:text="expenses:"
-        />
+        tools:ignore="HardcodedText" />
 
     <ScrollView
         android:id="@+id/transactions_scrollview"
@@ -82,11 +85,31 @@
         android:layout_marginHorizontal="20dp"
         >
 
+        <LinearLayout
+            android:id="@+id/transactions_linear_layout2"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:layout_gravity="center"
+            >
+
+
+        </LinearLayout>
+
 
     </ScrollView>
 
+    <Button
+        android:id="@+id/add_saving_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/add_saving"
+        />
 
     <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginVertical="10dp"
@@ -97,15 +120,17 @@
             android:id="@+id/close_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:text="Close"/>
+            android:layout_marginEnd="10dp"
+            android:text="Close"
+            tools:ignore="HardcodedText" />
 
         <Button
             android:id="@+id/delete_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="delete"/>
+            android:layout_marginStart="10dp"
+            android:text="delete"
+            tools:ignore="HardcodedText" />
 
     </LinearLayout>
 

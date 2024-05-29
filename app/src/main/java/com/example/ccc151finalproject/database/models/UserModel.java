@@ -4,6 +4,9 @@ import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+/**
+ * the data model for the User entity/table of the database, used for storing the important data of a user into a java object
+ */
 @Entity(tableName = "User", indices = {@Index(value = {"username"}, unique = true)})
 public class UserModel {
     @PrimaryKey(autoGenerate = true)

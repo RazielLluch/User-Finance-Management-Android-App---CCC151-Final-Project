@@ -25,14 +25,12 @@ import java.util.Locale;
 
 public class NewTransactionDialog extends Dialog {
 
-    private Context context;
-    private LinearLayout transactionsLinearLayout;
-    private Button closeButton, addButton;
-    private ExpenseDao expenseDao;
-    private BudgetDao budgetDao;
+    private final Context context;
+    private final LinearLayout transactionsLinearLayout;
+    private final ExpenseDao expenseDao;
+    private final BudgetDao budgetDao;
     private EditText expenseName, expenseDesc, expensePrice;
-    private Spinner typeDropdown, budgetDropdown;
-    private String[] types = {"other", "food", "transportation", "entertainment", "shopping/grocery", "health/cosmetics", "education"};
+    private final String[] types = {"other", "food", "transportation", "entertainment", "shopping/grocery", "health/cosmetics", "education"};
     private String[] budgets;
     private String selectedType;
     private String selectedBudget;
@@ -45,8 +43,8 @@ public class NewTransactionDialog extends Dialog {
 
         expenseName = findViewById(R.id.expense_name_field);
         expenseDesc = findViewById(R.id.expense_desc_field);
-        typeDropdown = findViewById(R.id.type_dropdown);
-        budgetDropdown = findViewById(R.id.budget_dropdown);
+        Spinner typeDropdown = findViewById(R.id.type_dropdown);
+        Spinner budgetDropdown = findViewById(R.id.budget_dropdown);
         expensePrice = findViewById(R.id.expense_price_field);
 
         // Set up the spinner with an adapter
@@ -59,9 +57,9 @@ public class NewTransactionDialog extends Dialog {
         budgets = new String[budgetModels.size()];
 
         for(int i = 0; i < budgetModels.size(); i++){
-            System.out.println(budgetModels.get(i).getBudgetName().toString());
+            System.out.println(budgetModels.get(i).getBudgetName());
 
-            budgets[i] = budgetModels.get(i).getBudgetName().toString();
+            budgets[i] = budgetModels.get(i).getBudgetName();
         }
 
 
@@ -97,8 +95,8 @@ public class NewTransactionDialog extends Dialog {
             }
         });
 
-        closeButton = findViewById(R.id.close_button);
-        addButton = findViewById(R.id.add_button);
+        Button closeButton = findViewById(R.id.close_button);
+        Button addButton = findViewById(R.id.add_button);
         closeButton.setOnClickListener(v -> this.dismiss());
         addButton.setOnClickListener(v -> addNewTransaction());
     }
@@ -131,7 +129,7 @@ public class NewTransactionDialog extends Dialog {
         String formattedDate = sdf.format(calendar.getTime());
 
         //test sample expense
-        ExpenseModel expenseModel = new ExpenseModel(expenseName.getText().toString(), expenseDesc.getText().toString(), "food", formattedDate, Double.parseDouble(expensePrice.getText().toString()), selectedBudgetIndex);
+        ExpenseModel expenseModel = new ExpenseModel(expenseName.getText().toString(), expenseDesc.getText().toString(), selectedType, formattedDate, Double.parseDouble(expensePrice.getText().toString()), selectedBudgetIndex);
 
         try{
             expenseDao.insertExpense(expenseModel);
@@ -139,7 +137,7 @@ public class NewTransactionDialog extends Dialog {
             TransactionView newTransaction = new TransactionView(context, expenseModel);
 
             transactionsLinearLayout.addView(newTransaction);
-        }catch(Exception e){
+        }catch(Exception ignored){
 
         }
         this.dismiss();

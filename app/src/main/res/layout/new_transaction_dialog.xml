@@ -23,7 +23,7 @@
         android:fontFamily="@font/inter_semibold"
         android:inputType="text"
         android:hint="expense name:"
-        />
+        android:autofillHints="" />
 
     <TextView
         android:layout_width="match_parent"
@@ -45,7 +45,7 @@
         android:inputType="textLongMessage"
         android:maxLines="5"
         android:hint="expense description:"
-        />
+        android:autofillHints="" />
 
     <TextView
         android:layout_width="match_parent"
@@ -85,8 +85,8 @@
         android:layout_marginHorizontal="10dp"
         android:fontFamily="@font/inter_semibold"
         android:inputType="numberDecimal"
-        android:hint="expense name:"
-        />
+        android:hint="amount:"
+        android:autofillHints="" />
 
     <TextView
         android:layout_width="match_parent"

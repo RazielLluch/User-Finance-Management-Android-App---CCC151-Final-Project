@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">CCC151 Final Project</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="your_spending_activity">Your spending activity:</string>
+    <string name="add_new_budget">add new budget</string>
+    <string name="budget">budget</string>
+    <string name="transactions">transactions</string>
+    <string name="analytics">analytics</string>
+    <string name="account">account</string>
+    <string name="add_saving">add saving</string>
 </resources>

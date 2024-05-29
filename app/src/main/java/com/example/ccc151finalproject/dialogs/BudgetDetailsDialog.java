@@ -2,19 +2,11 @@ package com.example.ccc151finalproject.dialogs;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
-import android.widget.Spinner;
 import android.widget.TextView;
-
-import java.util.List;
 import com.example.ccc151finalproject.R;
 import com.example.ccc151finalproject.database.MyAppDatabase;
 import com.example.ccc151finalproject.database.dao.BudgetDao;
@@ -23,85 +15,79 @@ import com.example.ccc151finalproject.database.models.BudgetModel;
 import com.example.ccc151finalproject.database.models.ExpenseModel;
 import com.example.ccc151finalproject.views.TransactionView;
 
-import java.text.SimpleDateFormat;
-import java.util.Locale;
+import java.util.List;
 
 public class BudgetDetailsDialog extends Dialog {
 
-    private MyAppDatabase db = MyAppDatabase.getMyAppDatabase(getContext());
-    private LinearLayout transactionsLinearLayout;
-    private Context context;
-    private ExpenseDao expenseDao;
+    private final MyAppDatabase db = MyAppDatabase.getMyAppDatabase(getContext());
+    private final LinearLayout transactionsLinearLayout;
+    private final ExpenseDao expenseDao;
     private BudgetDao budgetDao;
-    private BudgetModel budgetModel;
-    private TextView budgetName, budgetTimeframe, startDate, endDate;
-    private ScrollView transactionsScrollView;
-    private Button closeButton, deleteButton;
+    private final BudgetModel budgetModel;
 
-    private BudgetDetailsDialog INSTANCE;
+    private final BudgetDetailsDialog INSTANCE;
     private void init(){
         setContentView(R.layout.budget_details_dialog);
 
-        budgetName = findViewById(R.id.budget_name_txt);
-        budgetTimeframe = findViewById(R.id.timeframe_txt);
-        startDate = findViewById(R.id.start_date_txt);
-        endDate = findViewById(R.id.end_date_txt);
-
-        transactionsScrollView = findViewById(R.id.transactions_scrollview);
+        TextView budgetName = findViewById(R.id.budget_name_txt);
+        TextView budgetTimeframe = findViewById(R.id.timeframe_txt);
+        TextView startDate = findViewById(R.id.start_date_txt);
+        TextView endDate = findViewById(R.id.end_date_txt);
 
         budgetName.setText(budgetModel.getBudgetName());
         budgetTimeframe.setText("budget timeframe: " + budgetModel.getTimeframe());
         startDate.setText("from: " + budgetModel.getStartDate());
         endDate.setText("to: " + budgetModel.getEndDate());
-
+        LinearLayout transactionsLinearLayout2 = findViewById(R.id.transactions_linear_layout2);
         List<ExpenseModel> expensesOfThisBudget = expenseDao.getExpenseByBudget(budgetModel.getId());
 
         for(ExpenseModel expense : expensesOfThisBudget){
 
             TransactionView transactionView = new TransactionView(getContext(), expense);
 
-            transactionsScrollView.addView(transactionView);
+            transactionsLinearLayout2.addView(transactionView);
         }
 
-        closeButton = findViewById(R.id.close_button);
-        deleteButton = findViewById(R.id.delete_button);
+        Button addSaving = findViewById(R.id.add_saving_button);
+        Button closeButton = findViewById(R.id.close_button);
+        Button deleteButton = findViewById(R.id.delete_button);
 
-        closeButton.setOnClickListener(new View.OnClickListener() {
+        addSaving.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                INSTANCE.dismiss();
+                NewSavingDialog savingsDialog = new NewSavingDialog(getContext(), budgetModel);
+
+                savingsDialog.show();
             }
         });
 
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                budgetDao = db.budgetDao();
+        closeButton.setOnClickListener(v -> INSTANCE.dismiss());
 
-                List<BudgetModel> budgets = budgetDao.getAllBudgets();
+        deleteButton.setOnClickListener(v -> {
+            budgetDao = db.budgetDao();
 
-                int index = -1;
-                for(int i = 0; i < budgets.size(); i++){
-                    if(budgets.get(i).getId() == budgetModel.getId()){
-                        index = i;
-                        break;
-                    }
+            List<BudgetModel> budgets = budgetDao.getAllBudgets();
+
+            int index = -1;
+            for(int i = 0; i < budgets.size(); i++){
+                if(budgets.get(i).getId() == budgetModel.getId()){
+                    index = i;
+                    break;
                 }
-
-                if (index >= 0){
-                    transactionsLinearLayout.removeView(transactionsLinearLayout.getChildAt(index+1));
-                    budgetDao.deleteBudget(budgetModel);
-                }
-
-                INSTANCE.dismiss();
             }
+
+            if (index >= 0){
+                transactionsLinearLayout.removeView(transactionsLinearLayout.getChildAt(index+1));
+                budgetDao.deleteBudget(budgetModel);
+            }
+
+            INSTANCE.dismiss();
         });
 
     }
 
     public BudgetDetailsDialog(Context context, BudgetModel budgetModel, LinearLayout transactionsLinearLayout) {
         super(context);
-        this.context = context;
         this.budgetModel = budgetModel;
         this.transactionsLinearLayout = transactionsLinearLayout;
 
