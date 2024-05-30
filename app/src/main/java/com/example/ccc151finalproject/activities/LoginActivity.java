@@ -18,6 +18,9 @@ import com.example.ccc151finalproject.database.models.UserModel;
 public class LoginActivity extends AppCompatActivity {
 
     UserModel loggedInUser;
+
+    public final MyAppDatabase db = MyAppDatabase.getMyAppDatabase(this);
+    public final UserDao userDao = db.userDao();
     private EditText getUsername;
     private EditText getPassword;
     private Button btnSignIn;
@@ -56,8 +59,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private void signIn(String username, String password){
         successfulLogin = false;
-        MyAppDatabase db = MyAppDatabase.getMyAppDatabase(this);
-        UserDao userDao = db.userDao();
 
         loggedInUser = userDao.signIn(username, password);
 
